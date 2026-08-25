@@ -1,0 +1,5 @@
+# 服务器优先复用已安装的WRF-GS/PyTorch/CUDA环境。
+numpy>=1.24,<3
+pandas>=2.0,<4
+torch>=1.13
+

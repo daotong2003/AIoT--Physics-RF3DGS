@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.vscode/
+.env
+
+# 原始数据、预处理缓存、训练产物不得进入Git。
+data/*
+!data/README.md
+processed/
+runs/
+artifacts/
+*.ply
+*.csv
+*.docx
+*.npz
+*.pt
+*.pth
+*.ckpt
+

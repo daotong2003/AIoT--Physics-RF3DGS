@@ -1,4 +1,4 @@
-# AIoT Physics RF-3DGS
+# AIoT--Physics-RF3DGS
 
 面向窄带无源反散射定位的物理RF-3DGS实现。系统不训练 `Signal -> Position` 回归器，而是通过静态环境Gaussian、动态物体Gaussian及 `CW -> Tag -> RX` 双基地物理渲染反演物体中心和置信度。
 
@@ -29,4 +29,3 @@ DATA_ROOT=/data/aiot/raw RUN_ROOT=/runs/rf3dgs/run_001 bash scripts/run_full.sh
 ## 输出与复现
 
 `RUN_ROOT` 保存模型、训练清单和评估结果。`evaluation/metrics.json` 报告四组消融、平均/中位/P90误差、`SR@1m / SR@3m / SR@5m` 和R90覆盖率；训练清单记录输入SHA-256、Git commit、CUDA/PyTorch版本、随机种子及完整配置。
-

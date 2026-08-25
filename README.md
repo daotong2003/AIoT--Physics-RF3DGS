@@ -9,7 +9,7 @@
 ```bash
 conda activate wrfgsplus
 pip install -r requirements-rf3dgs.txt
-python -m pytest
+python3 -m pytest
 ```
 
 ## 运行

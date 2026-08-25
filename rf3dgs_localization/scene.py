@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .contracts import GaussianSet, file_to_map_coordinates
+from .contracts import GaussianSet
 
 
 _PLY_TYPES = {
@@ -191,8 +191,8 @@ def prepare_static_scene(
     coarse_voxel_m=0.20,
     add_structural_planes=True,
 ):
-    xyz_file, colors = load_ply_vertices(ply_path)
-    xyz = file_to_map_coordinates(xyz_file)
+    # PLY已使用全局地图坐标；Y轴翻转仅适用于README/CSV设备与测量坐标。
+    xyz, colors = load_ply_vertices(ply_path)
     xmin, xmax, ymin, ymax = [float(value) for value in roi_xy_bounds]
     fine_mask = (
         (xyz[:, 0] >= xmin)

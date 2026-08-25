@@ -1,4 +1,6 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
@@ -8,7 +10,7 @@ from rf3dgs_localization.contracts import (
     map_to_file_coordinates,
 )
 from rf3dgs_localization.objects import build_default_object_templates
-from rf3dgs_localization.scene import voxelize_points
+from rf3dgs_localization.scene import prepare_static_scene, voxelize_points
 
 
 class CoordinateContractTest(unittest.TestCase):
@@ -42,6 +44,35 @@ class ObjectTemplateTest(unittest.TestCase):
 
 
 class GaussianSceneTest(unittest.TestCase):
+    def test_scene_ply_coordinates_are_not_flipped(self):
+        content = """ply
+format ascii 1.0
+element vertex 3
+property float x
+property float y
+property float z
+property uchar red
+property uchar green
+property uchar blue
+end_header
+0.00 2.00 0.00 255 0 0
+0.04 2.00 0.00 255 0 0
+0.00 2.04 0.00 255 0 0
+"""
+        with TemporaryDirectory() as directory:
+            source = Path(directory) / "scene.ply"
+            target = Path(directory) / "scene.npz"
+            source.write_text(content, encoding="ascii")
+            scene = prepare_static_scene(
+                source,
+                target,
+                roi_xy_bounds=(-1.0, 1.0, 1.0, 3.0),
+                fine_voxel_m=0.1,
+                coarse_voxel_m=0.2,
+                add_structural_planes=False,
+            )
+            self.assertGreater(float(scene.xyz_m[:, 1].mean()), 1.9)
+
     def test_voxel_gaussian_covariances_are_positive_definite(self):
         points = np.array(
             [
